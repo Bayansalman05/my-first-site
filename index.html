@@ -301,22 +301,8 @@ html{scroll-behavior:smooth}
 body{font-family:"DM Sans",sans-serif;color:var(--text);background:var(--off-white);overflow-x:hidden}
 
 /* EDIT BAR */
-.edit-bar{display:none;position:fixed;top:0;left:0;right:0;z-index:999;background:#1a1000;padding:0.55rem 1.5rem;align-items:center;justify-content:space-between;border-bottom:2px solid var(--gold);}
-.edit-bar.on{display:flex;}
-.edit-badge{background:var(--gold);color:#1B2A4A;font-size:0.68rem;font-weight:700;letter-spacing:0.15em;padding:0.22rem 0.6rem;text-transform:uppercase;white-space:nowrap;}
-.edit-hint{font-size:0.75rem;color:rgba(255,255,255,0.55);margin-left:0.8rem;}
-.edit-btns{display:flex;gap:0.5rem;}
-.ebtn{padding:0.38rem 0.9rem;font-size:0.72rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;border:1.5px solid rgba(255,255,255,0.2);background:transparent;color:rgba(255,255,255,0.75);transition:all 0.2s;}
-.ebtn:hover,.ebtn.gold{border-color:var(--gold);color:var(--gold);}
-.fab{position:fixed;bottom:1.5rem;right:1.5rem;z-index:998;background:var(--gold);color:var(--navy);border:none;padding:0.7rem 1.3rem;font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;box-shadow:0 4px 18px rgba(0,0,0,0.2);}
-.fab:hover{background:var(--gold-light);}
-body.editing [contenteditable]{outline:2px dashed rgba(201,168,76,0.45);outline-offset:2px;cursor:text;}
-body.editing [contenteditable]:hover{outline-color:rgba(201,168,76,0.8);}
-body.editing [contenteditable]:focus{outline:2px solid var(--gold);background:rgba(201,168,76,0.03);}
-
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(27,42,74,0.97);backdrop-filter:blur(8px);padding:0 5%;}
-body.editing nav{top:42px;}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;height:68px;max-width:1200px;margin:0 auto;}
 .nav-logo{font-family:"Cormorant Garamond",serif;font-size:1.35rem;font-weight:600;color:var(--white);letter-spacing:0.08em;cursor:pointer;}
 .nav-logo span{color:var(--gold);}
@@ -329,7 +315,6 @@ body.editing nav{top:42px;}
 /* PAGES */
 .page{display:none;padding-top:68px;}
 .page.active{display:block;}
-body.editing .page{padding-top:110px;}
 
 /* HERO */
 .hero{position:relative;min-height:90vh;display:flex;align-items:center;background:var(--navy);overflow:hidden;padding:4rem 5%;}
@@ -485,21 +470,8 @@ footer{background:var(--navy);padding:2.8rem 5%;}
 }
 </style>
 </head>
-<body id="artifacts-component-root-html" class="editing">
+<body id="artifacts-component-root-html">
 
-<div class="edit-bar on" id="editBar">
-  <div style="display:flex;align-items:center;">
-    <span class="edit-badge">✏ Edit Mode</span>
-    <span class="edit-hint">Click any text to edit it</span>
-  </div>
-  <div class="edit-btns">
-    <button class="ebtn" onclick="copyHTML()">Copy HTML</button>
-    <button class="ebtn gold" onclick="downloadHTML()">⬇ Download Site</button>
-    <button class="ebtn" onclick="toggleEdit()">Exit</button>
-  </div>
-</div>
-
-<button class="fab" id="fabBtn" onclick="toggleEdit()">✕ Exit Edit Mode</button>
 
 <nav>
   <div class="nav-inner">
@@ -790,45 +762,6 @@ function closeBlog(){
   document.getElementById('post-full').classList.remove('open');
   document.getElementById('blog-list').style.display='block';
   window.scrollTo({top:0,behavior:'smooth'});
-}
-let editMode=false;
-function toggleEdit(){
-  editMode=!editMode;
-  document.body.classList.toggle('editing',editMode);
-  document.getElementById('editBar').classList.toggle('on',editMode);
-  document.getElementById('fabBtn').textContent=editMode?'✕ Exit Edit Mode':'✏ Edit Site';
-  document.querySelectorAll('[contenteditable]').forEach(el=>{
-    el.contentEditable=editMode?'true':'false';
-  });
-}
-function downloadHTML(){
-  const clone=document.documentElement.cloneNode(true);
-  clone.querySelectorAll('[contenteditable]').forEach(el=>el.removeAttribute('contenteditable'));
-  const html='<!DOCTYPE html>\n'+clone.outerHTML;
-  const blob=new Blob([html],{type:'text/html'});
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download='bayan_salman_website.html';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(a.href);
-}
-function copyHTML(){
-  const clone=document.documentElement.cloneNode(true);
-  clone.querySelectorAll('[contenteditable]').forEach(el=>el.removeAttribute('contenteditable'));
-  const html='<!DOCTYPE html>\n'+clone.outerHTML;
-  if(navigator.clipboard){
-    navigator.clipboard.writeText(html).then(()=>alert('HTML copied! Paste into Notepad and save as .html'));
-  } else {
-    const ta=document.createElement('textarea');
-    ta.value=html;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
-    alert('HTML copied! Paste into Notepad and save as .html');
-  }
 }
 </script>
 
