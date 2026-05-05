@@ -505,16 +505,16 @@ footer{background:var(--navy);padding:2.8rem 5%;}
   <div class="nav-inner">
     <div class="nav-logo" onclick="showPage('home')">Bayan <span>Salman</span></div>
     <ul class="nav-links">
-      <li><a onclick="showPage('home')" class="" id="nav-home">Home</a></li>
+      <li><a onclick="showPage('home')" class="active" id="nav-home">Home</a></li>
       <li><a onclick="showPage('blog')" id="nav-blog" class="">Blog</a></li>
-      <li><a onclick="showPage('contact')" id="nav-contact" class="active">Contact</a></li>
+      <li><a onclick="showPage('contact')" id="nav-contact" class="">Contact</a></li>
     </ul>
     <button class="nav-cta" onclick="showPage('contact')">Get In Touch</button>
   </div>
 </nav>
 
 <!-- HOME -->
-<div class="page" id="page-home">
+<div class="page active" id="page-home">
   <section class="hero">
     <svg class="hero-bg" viewBox="0 0 1200 700" preserveAspectRatio="none">
       <line x1="0" y1="100" x2="1200" y2="400"></line><line x1="0" y1="300" x2="1200" y2="600"></line>
@@ -721,7 +721,7 @@ footer{background:var(--navy);padding:2.8rem 5%;}
 </div>
 
 <!-- CONTACT -->
-<div class="page active" id="page-contact">
+<div class="page" id="page-contact">
   <div class="contact-hero">
     <div class="contact-hero-inner">
       <p class="s-label">Let's Connect</p>
